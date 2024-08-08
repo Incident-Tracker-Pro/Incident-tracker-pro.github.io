@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Incident Tracker is a web-based application to log, search, and manage incidents effectively.">
+    <meta name="keywords" content="Incident Tracker, Incident Management, Web App, Incident Logging">
+    <meta name="author" content="तन्मय">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Incident Tracker">
+    <meta property="og:description" content="A web-based application for managing incidents with easy logging, searching, and data management features.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com/incident-tracker">
+    <meta property="og:image" content="https://yourdomain.com/images/crisis.png">
+    <title>Incident Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="images/crisis.png" type="image/x-icon">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Incident Tracker</h1>
+            <span class="header-icon"><b>书法</b></span>
+        </header>
+
+        <main class="dashboard-layout">
+            <section class="card new-incident">
+                <h2>New Incident</h2>
+                <form id="new-incident">
+                    <div class="form-group">
+                        <label for="inc-number">INC Number:</label>
+                        <input type="text" id="inc-number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="caller-number">Caller Number:</label>
+                        <input type="text" id="caller-number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status:</label>
+                        <select id="status" required>
+                            <option value="">Select Status</option>
+                            <option value="Active">Active</option>
+                            <option value="Resolved">Resolved</option>
+                            <option value="Awaiting User Info">Awaiting User Info</option>
+                            <option value="POS Depot">POS Depot</option>
+                            <option value="Escalation">Escalation</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Date:</label>
+                        <input type="date" id="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="summary">Summary:</label>
+                        <textarea id="summary" required></textarea>
+                    </div>
+                    <button type="submit" id="add-incident-btn" class="btn-primary">Add Incident</button>
+                    <button type="button" id="clear-form-btn" class="btn-secondary">Clear</button>
+                </form>
+            </section>
+
+            <div class="side-cards">
+                <section class="card search-incidents">
+                    <h2>Search Incidents</h2>
+                    <div class="search-container">
+                        <input type="text" id="search-inc-number" placeholder="INC Number">
+                        <input type="text" id="search-caller-number" placeholder="Caller Number">
+                        <select id="search-status">
+                            <option value="">All Statuses</option>
+                            <option value="Active">Active</option>
+                            <option value="Resolved">Resolved</option>
+                            <option value="Awaiting User Info">Awaiting User Info</option>
+                            <option value="POS Depot">POS Depot</option>
+                            <option value="Escalation">Escalation</option>
+                        </select>
+                        <input type="date" id="search-date">
+                        <button id="search-btn" class="btn-primary">Search</button>
+                        <button id="clear-search-btn" class="btn-secondary">Clear</button>
+                    </div>
+                </section>
+
+                <section class="card statistics">
+                    <h2>Statistics</h2>
+                    <div class="stat-grid">
+                        <div class="stat-item">
+                            <h3>Total Incidents</h3>
+                            <p id="total-incidents">0</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>Active Incidents</h3>
+                            <p id="active-incidents">0</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>Resolved Incidents</h3>
+                            <p id="resolved-incidents">0</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>Resolution Rate</h3>
+                            <p id="resolution-rate">0%</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <section class="card incident-history">
+                <h2>Incident History</h2>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>INC Number</th>
+                                <th>Caller Number</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Summary</th>
+                            </tr>
+                        </thead>
+                        <tbody id="incident-list"></tbody>
+                    </table>
+                </div>
+                <div class="pagination">
+                    <button id="prev-page" class="btn-secondary">Previous</button>
+                    <span id="page-info"></span>
+                    <button id="next-page" class="btn-secondary">Next</button>
+                </div>
+            </section>
+
+            <section class="card data-management">
+                <h2>Data Management</h2>
+
+                <section class="card date-filter">
+                    <h3>Date Filter</h3>
+                    <div class="form-group">
+                        <label for="filter-date-type">Filter by:</label>
+                        <select id="filter-date-type">
+                            <option value="all">All Time</option>
+                            <option value="month">Specific Month</option>
+                            <option value="range">Date Range</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="month-filter" style="display: none;">
+                        <label for="filter-month">Month:</label>
+                        <input type="month" id="filter-month">
+                    </div>
+                    <div class="form-group" id="date-range-filter" style="display: none;">
+                        <label for="filter-start-date">Start Date:</label>
+                        <input type="date" id="filter-start-date">
+                        <label for="filter-end-date">End Date:</label>
+                        <input type="date" id="filter-end-date">
+                    </div>
+                    <button id="apply-filter-btn" class="btn-primary">Apply Filter</button>
+                </section>
+
+                <div class="data-controls">
+
+                    <h2>Date Export / Import</h2>
+
+                    <div class="form-group">
+                      <label for="agent-name">Agent Name:</label>
+                      <input type="text" id="agent-name" required>
+                    </div>
+                    <button id="export-btn" class="btn-primary">Export to CSV</button>
+                    <div class="form-group">
+                        <label for="file-input">Import CSV:</label>
+                        <input type="file" id="file-input" accept=".csv">
+                    </div>
+                    <button id="import-btn" class="btn-primary">Import CSV</button>
+                    <button id="delete-all-btn" class="btn-danger">Delete All Data</button>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>© 2024 Incident Tracker | Designed by तन्मय</p>
+            <p>Version 1.1.0 | Date: 08-08-2024</p>
+        </footer>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
